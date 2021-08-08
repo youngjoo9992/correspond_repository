@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraResolution : MonoBehaviour
 {
+    //카메라 해상도 조절 함수
     void Awake()
     {
         Camera camera = GetComponent<Camera>();
