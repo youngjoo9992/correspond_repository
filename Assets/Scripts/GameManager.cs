@@ -102,46 +102,64 @@ public class GameManager : MonoBehaviour
         player.transform.position = Vector3.Lerp(player.transform.position, playerCoordinate[destination], playerSpeed);
     }
 
-    //1번 버튼 클릭 함수 - 윤영주
+    //1번 버튼 onClick 함수
     public void button1Click()
     {
         destination = 0;
     }
 
-    //2번 버튼 클릭 함수
+    //2번 버튼 onClick() 함수
     public void button2Click()
     {
         destination = 1;
     }
 
-    //3번 버튼 클릭 함수
+    //3번 버튼 onClick() 함수
     public void button3Click()
     {
         destination = 2;
     }
 
-    //4번 버튼 클릭 함수
+    //4번 버튼 onClick() 함수
     public void button4Click()
     {
         destination = 3;
     }
 
-    //StartButton 클릭 함수
+    //StartButton onClick() 함수
     public void startButtonClick()
     {
         SceneManager.LoadScene("Game");
     }
 
-    //ShopButton 클릭 함수
+    //ShopButton onClick() 함수
     public void shopButtonClick()
     {
         SceneManager.LoadScene("Shop");
     }
 
-    //MenuButton 클릭 함수
+    //MenuButton onClick() 함수
     public void menuButtonClick()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    //QuitButton onClick() 함수
+    public void quitButtonClick()
+    {
+
+    }
+
+    //SettingButton onClick() 함수
+    public void settingButtonClick()
+    {
+        SceneManager.LoadScene("Setting");
+    }
+
+    //RestartButton onClick() 함수
+    public void restartButtonClick()
+    {
+        SceneManager.LoadScene("Game");
     }
 
 }
