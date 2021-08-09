@@ -144,10 +144,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    //QuitButton onClick() 함수
+    //QuitButton onClick() 함수(게임 종료)
     public void quitButtonClick()
     {
-
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 
     //SettingButton onClick() 함수
