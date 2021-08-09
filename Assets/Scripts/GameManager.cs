@@ -147,7 +147,6 @@ public class GameManager : MonoBehaviour
     //QuitButton onClick() 함수(게임 종료)
     public void quitButtonClick()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 
