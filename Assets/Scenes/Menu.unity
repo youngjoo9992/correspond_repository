@@ -545,11 +545,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b29e7ef97b3db45aef496b72096236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gold: 1000
+  characterIndex: 0
+  characterCost: 640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+  characterPossession: 010000000000000000000000000000000000
+  standHolderPrefab: {fileID: 4240033890535594204, guid: 159f08b97aa80b2459783991a4b188d8,
+    type: 3}
   playerCoordinate:
   - {x: -1.34375, y: 3.6875}
   - {x: 1.34375, y: 3.6875}
   - {x: -1.34375, y: 1.3125}
   - {x: 1.34375, y: 1.3125}
+  characterSprite:
+  - {fileID: 21300000, guid: 2aa0f4304f6f77e4082d8cdd1221e4d7, type: 3}
+  - {fileID: 21300000, guid: 78a220fc9f3b5f1419bec8dcc7b4b462, type: 3}
+  - {fileID: 21300000, guid: a159e94c2096deb4a8cbaeee2c131af8, type: 3}
+  - {fileID: 21300000, guid: 55adf348ace8fd04a865379754e1b8a5, type: 3}
+  - {fileID: 21300000, guid: b8f3433e943f9fd4aaa3e89752b6019f, type: 3}
+  - {fileID: 21300000, guid: ed51def7b4f50ce45bd2ddfe4773babb, type: 3}
+  - {fileID: 21300000, guid: cd811f0d25c8bda429d48157b396ede6, type: 3}
+  - {fileID: 21300000, guid: 76cd2c9523f156b49b778e40f3d5e9e9, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
 --- !u!4 &763558621
 Transform:
   m_ObjectHideFlags: 0
@@ -1252,7 +1277,7 @@ GameObject:
   - component: {fileID: 2115576306}
   m_Layer: 5
   m_Name: GoldText
-  m_TagString: Untagged
+  m_TagString: GoldText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

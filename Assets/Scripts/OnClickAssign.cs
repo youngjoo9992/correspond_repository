@@ -47,5 +47,13 @@ public class OnClickAssign : MonoBehaviour
         {
             gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().button4Click);
         }
+        else if (gameObject.transform.tag == "LeftButton")
+        {
+            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().leftButtonClick);
+        }
+        else if (gameObject.transform.tag == "RightButton")
+        {
+            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().rightButtonClick);
+        }
     }
 }
