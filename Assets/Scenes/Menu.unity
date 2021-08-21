@@ -566,11 +566,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cd811f0d25c8bda429d48157b396ede6, type: 3}
   - {fileID: 21300000, guid: 76cd2c9523f156b49b778e40f3d5e9e9, type: 3}
   - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
-  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
-  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
-  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
-  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
-  - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
+  - {fileID: 21300000, guid: 1a124d3c98dee1f43aeae8aaeeb3a3ef, type: 3}
+  - {fileID: 21300000, guid: b19e6e757aebfe44db0a92e3b1b754c0, type: 3}
+  - {fileID: 21300000, guid: 7857f21762c137e42854ddd5503466e3, type: 3}
+  - {fileID: 21300000, guid: 239d77872782bf34ebad870daae1c8fd, type: 3}
+  - {fileID: 21300000, guid: db75ec6f5c09a6142b690b277dc3b0dd, type: 3}
   - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
   - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
   - {fileID: 21300000, guid: c012b26cbd133d844bde2c01aaea41c4, type: 3}
@@ -701,8 +701,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b8e3d6eef9530e445a5005e5ba8aaa97, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
