@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,13 +16,20 @@ public class GameManager : MonoBehaviour
     private float musicVolume;//음악 볼륨
     private float soundEffectVolume;//효과음 볼륨
     private float playerSpeed = 0.3f;//플레이어 이동속도
-
+    private float Vol = 1f;
+    
     private bool shopLoop;
     public bool[] characterPossession;
 
     private GameObject player;//플레이어 게임오브젝트
     private GameObject standHolder;
     public GameObject standHolderPrefab;//상품 진열대
+    public Slider Volume;
+    public AudioSource Audio;
+    public Slider EffectVolume;
+    public AudioSource EffectAudio;
+
+
 
     //구역별 플레이어 좌표
     public Vector2[] playerCoordinate = { new Vector2(-1.34375f, 3.6875f), new Vector2(1.34375f, 3.6875f), new Vector2(-1.34375f, 1.3125f), new Vector2(1.34375f, 1.3125f) };
@@ -42,6 +50,7 @@ public class GameManager : MonoBehaviour
         gameScene();
         gameOverScene();
         settingScene();
+        VolumeSlider();
     }
 
     //모든 씬에서 실행할 코드들 - 공용
@@ -101,6 +110,10 @@ public class GameManager : MonoBehaviour
     private void startSettings()
     {
         dontDestroyGameManager();
+        Vol = PlayerPrefs.GetFloat("Vol", 1f);
+        Volume.value = Vol;
+        Audio.volume = Volume.value;
+
     }
 
     //GameManager 복제 방지 코드 - 윤영주
@@ -269,6 +282,14 @@ public class GameManager : MonoBehaviour
         {
             shopPage -= 1;
         }
+    }
+    
+    public void VolumeSlider()
+    {
+        Audio.volume = Volume.value;
+
+        Vol = Volume.value;
+        PlayerPrefs.SetFloat("Vol", Vol);
     }
 
 }
