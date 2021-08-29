@@ -19,6 +19,13 @@ TagManager:
   - RightButton
   - PageText
   - GoldText
+  - MusicSource
+  - MusicVolumeSlider
+  - EffectVolumeSlider
+  - Warning
+  - Obstacle
+  - ScoreText
+  - ResultText
   layers:
   - Default
   - TransparentFX

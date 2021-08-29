@@ -9,27 +9,37 @@ public class GameManager : MonoBehaviour
 {
     private int destination;//0 = 1번 구역, 1 = 2번 구역, 2 = 3번 구역, 3 = 4번 구역
     private int shopPage = 1;//상점 페이지
+    private int gameGold;
+    private int score;
+    private int highScore;
+    private int[] obstacleIndex = { 0, 0, 0 };
     public int gold;//골드
     public int characterIndex;//현재 장착 캐릭터 인덱스
     public int[] characterCost;//상품별 가격
 
-    private float musicVolume;//음악 볼륨
-    private float soundEffectVolume;//효과음 볼륨
+   
     private float playerSpeed = 0.3f;//플레이어 이동속도
-    private float Vol = 1f;
-    
+    private float obstacleFormationSpeed = 3f;
+    public float obstacleDelay = 2f;
+    public float musicVolume = 1;//음악 볼륨
+    public float soundEffectVolume = 1;//효과음 볼륨
+
     private bool shopLoop;
+    private bool allowObstacle;
+    private bool allowObstacleCoroutine;
     public bool[] characterPossession;
 
-    private GameObject player;//플레이어 게임오브젝트
+    public GameObject player;//플레이어 게임오브젝트
     private GameObject standHolder;
     public GameObject standHolderPrefab;//상품 진열대
-    public Slider Volume;
-    public AudioSource Audio;
-    public Slider EffectVolume;
-    public AudioSource EffectAudio;
+    public GameObject obstacle;
+    public GameObject warning;
 
+    public Slider musicVolumeSlider;
+    public Slider effectVolumeSlider;
 
+    private Text scoreText;
+    private Text resultText;
 
     //구역별 플레이어 좌표
     public Vector2[] playerCoordinate = { new Vector2(-1.34375f, 3.6875f), new Vector2(1.34375f, 3.6875f), new Vector2(-1.34375f, 1.3125f), new Vector2(1.34375f, 1.3125f) };
@@ -50,13 +60,12 @@ public class GameManager : MonoBehaviour
         gameScene();
         gameOverScene();
         settingScene();
-        VolumeSlider();
     }
 
     //모든 씬에서 실행할 코드들 - 공용
     private void allScene()
     {
-
+        setListenerVolume();
     }
 
     //Menu씬에서 실행할 코드들 - 공용
@@ -85,6 +94,9 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Game")
         {
             movePlayer();
+            formWarning();
+            gameEnd();
+            showScore();
         }
     }
 
@@ -93,7 +105,7 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "GameOver")
         {
-
+            showResult();
         }
     }
 
@@ -102,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "Setting")
         {
-
+            setVolume();
         }
     }
 
@@ -110,9 +122,9 @@ public class GameManager : MonoBehaviour
     private void startSettings()
     {
         dontDestroyGameManager();
-        Vol = PlayerPrefs.GetFloat("Vol", 1f);
+        /*Vol = PlayerPrefs.GetFloat("Vol", 1f);
         Volume.value = Vol;
-        Audio.volume = Volume.value;
+        Audio.volume = Volume.value;*/
 
     }
 
@@ -202,6 +214,100 @@ public class GameManager : MonoBehaviour
         goldText.text = "G" + gold;
     }
 
+    //볼륨 설정 함수
+    private void setVolume()
+    {
+        musicVolumeSlider = GameObject.FindWithTag("MusicVolumeSlider").GetComponent<Slider>();
+        effectVolumeSlider = GameObject.FindWithTag("EffectVolumeSlider").GetComponent<Slider>();
+        if (musicVolumeSlider != null)
+        {
+            musicVolume = musicVolumeSlider.value;
+            soundEffectVolume = effectVolumeSlider.value;
+        }
+    }
+
+    //게임리스너 볼륨 설정 함수
+    private void setListenerVolume()
+    {
+        GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>().volume = musicVolume;
+    }
+
+    //경고 표시 함수 - 윤영주
+    private void formWarning()
+    {
+        if (allowObstacle)
+        {
+            obstacleIndex = new int[]{ Random.Range(0, 4), Random.Range(0, 4), Random.Range(0, 4) };
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject warningPref = Instantiate(warning, playerCoordinate[obstacleIndex[i]], Quaternion.identity);
+                warningPref.GetComponent<Warning>().index = obstacleIndex[i];
+            }
+            allowObstacle = false;
+            obstacleFormationSpeed *= 0.97f;
+            obstacleDelay *= 0.97f;
+            score++;
+            if (score > highScore)
+            {
+                highScore = score;
+            }
+        }
+        else if (!allowObstacleCoroutine)
+        {
+            StartCoroutine(setAllowObstacle());
+        }
+    }
+    
+    //게임 종료 함수 - 윤영주
+    private void gameEnd()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
+        if (player != null && !player.GetComponent<Player>().isGameStarted)
+        {
+            GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+            for (int i = 0; i < obstacles.Length; i++)
+            {
+                Destroy(obstacles[i]);
+            }
+            obstacleFormationSpeed = 3f;
+            obstacleDelay = 2f;
+            destination = 0;
+            StopAllCoroutines();
+            gameGold = score;
+            gold += gameGold;
+            SceneManager.LoadScene("GameOver");
+        }
+    }
+
+    //스코어 표시 함수 - 윤영주
+    private void showScore()
+    {
+        if (scoreText == null)
+        {
+            scoreText = GameObject.FindWithTag("ScoreText").GetComponent<Text>();
+        }
+        if (scoreText != null)
+        {
+            scoreText.text = "SCORE: " + score;
+        }
+    }
+
+    //게임 결과 표시 함수 - 윤영주
+    private void showResult()
+    {
+        if (resultText == null)
+        {
+            resultText = GameObject.FindWithTag("ResultText").GetComponent<Text>();
+        }
+        if (resultText != null)
+        {
+            resultText.text = "SCORE: " + score + "\n" + "HIGH: " + highScore + "\n" + "GOLD: " + gameGold;
+        }
+    }
+
     //1번 버튼 onClick 함수 - 윤영주
     public void button1Click()
     {
@@ -230,6 +336,9 @@ public class GameManager : MonoBehaviour
     public void startButtonClick()
     {
         SceneManager.LoadScene("Game");
+        allowObstacle = true;
+        allowObstacleCoroutine = false;
+        score = 0;
     }
 
     //ShopButton onClick() 함수 - 윤영주
@@ -261,6 +370,9 @@ public class GameManager : MonoBehaviour
     public void restartButtonClick()
     {
         SceneManager.LoadScene("Game");
+        allowObstacle = true;
+        allowObstacleCoroutine = false;
+        score = 0;
     }
 
     //RightButton onClick() 함수 - 윤영주
@@ -276,6 +388,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //LeftButton onClick()함수 - 윤영주
     public void leftButtonClick()
     {
         if (shopPage != 1)
@@ -284,12 +397,21 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    IEnumerator setAllowObstacle()
+    {
+        allowObstacleCoroutine = true;
+        yield return new WaitForSeconds(obstacleFormationSpeed);
+        allowObstacle = true;
+        allowObstacleCoroutine = false;
+    }
+
+    /*
     public void VolumeSlider()
     {
         Audio.volume = Volume.value;
 
         Vol = Volume.value;
         PlayerPrefs.SetFloat("Vol", Vol);
-    }
+    }*/
 
 }
