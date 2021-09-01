@@ -5,6 +5,7 @@ using UnityEngine;
 public class Warning : MonoBehaviour
 {
     public int index;
+    public int warningItemIndex;
 
     private float delay;
 
@@ -12,7 +13,9 @@ public class Warning : MonoBehaviour
 
     private GameManager gameManager;
 
-    public GameObject Obstacle;
+    public GameObject obstaclePref;
+
+    public Sprite[] obstacleSprites;
 
     void Start()
     {
@@ -24,7 +27,9 @@ public class Warning : MonoBehaviour
     {
         if (timeUp)
         {
-            Instantiate(Obstacle, new Vector2(transform.position.x + transform.position.x / Mathf.Abs(transform.position.x) * 2.5f, transform.position.y), Quaternion.identity);
+            GameObject obstacle = Instantiate(obstaclePref, new Vector2(transform.position.x + transform.position.x / Mathf.Abs(transform.position.x) * 2.5f, transform.position.y), Quaternion.identity);
+            obstacle.GetComponent<SpriteRenderer>().sprite = obstacleSprites[warningItemIndex];
+            obstacle.GetComponent<Obstacle>().index = warningItemIndex;
             Destroy(gameObject);
         }
         else

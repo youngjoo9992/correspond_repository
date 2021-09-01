@@ -6805,6 +6805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold: 0
   characterIndex: 0
+  itemIndex: 0
   characterCost: 
   obstacleDelay: 2
   musicVolume: 1
@@ -6822,6 +6823,7 @@ MonoBehaviour:
   - {x: -1.34375, y: 1.3125}
   - {x: 1.34375, y: 1.3125}
   characterSprite: []
+  itemSprite: []
 --- !u!4 &2096057967
 Transform:
   m_ObjectHideFlags: 0

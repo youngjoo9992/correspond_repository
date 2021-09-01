@@ -5,6 +5,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     private int direction = 1;
+    public int index;
 
     private float start;
     private float max;

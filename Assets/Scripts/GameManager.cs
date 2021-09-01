@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class GameManager : MonoBehaviour
     private int score;
     private int highScore;
     private int[] obstacleIndex = { 0, 0, 0 };
+    private int[] obsBlackList = { 4, 4, 4 };
     public int gold;//골드
     public int characterIndex;//현재 장착 캐릭터 인덱스
+    public int itemIndex;
     public int[] characterCost;//상품별 가격
 
    
@@ -46,6 +49,7 @@ public class GameManager : MonoBehaviour
     private Vector2 shopCoordinate;//상점 좌표
 
     public Sprite[] characterSprite;//캐릭터 상품 리소스
+    public Sprite[] itemSprite;//아이템 리소스 --> 0 = 셔플, 1 = 쉴드, 2 = 더블
 
     void Start()
     {
@@ -240,9 +244,36 @@ public class GameManager : MonoBehaviour
             obstacleIndex = new int[]{ Random.Range(0, 4), Random.Range(0, 4), Random.Range(0, 4) };
             for (int i = 0; i < 3; i++)
             {
-                GameObject warningPref = Instantiate(warning, playerCoordinate[obstacleIndex[i]], Quaternion.identity);
-                warningPref.GetComponent<Warning>().index = obstacleIndex[i];
+                if (obsBlackList.Contains(obstacleIndex[i]))
+                {
+
+                }
+                else
+                {
+                    GameObject warningPref = Instantiate(warning, playerCoordinate[obstacleIndex[i]], Quaternion.identity);
+                    warningPref.GetComponent<Warning>().index = obstacleIndex[i];
+                    itemIndex = Random.Range(0, 101);
+                    if (itemIndex <= 5)
+                    {
+                        itemIndex = 0;
+                    }
+                    else if (itemIndex <= 10)
+                    {
+                        itemIndex = 1;
+                    }
+                    else if (itemIndex <= 15)
+                    {
+                        itemIndex = 2;
+                    }
+                    else
+                    {
+                        itemIndex = 3;
+                    }
+                    warningPref.GetComponent<Warning>().warningItemIndex = itemIndex;
+                    obsBlackList[i] = obstacleIndex[i];
+                }
             }
+            obsBlackList = new int[] { 4, 4, 4 };
             allowObstacle = false;
             obstacleFormationSpeed *= 0.97f;
             obstacleDelay *= 0.97f;
