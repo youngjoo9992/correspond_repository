@@ -8,8 +8,7 @@ public class Obstacle : MonoBehaviour
     public int index;
 
     private float start;
-    private float max;
-    public float obstacleSpeed = 0.1f;
+    public float obstacleSpeed = 0.03f;
 
     private bool sign;
 

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 37857537}
   - component: {fileID: 37857536}
   - component: {fileID: 37857539}
+  - component: {fileID: 37857540}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: RestartButton
@@ -234,7 +235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 07ea8819f206ab1419d2fbf6793853f0, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -262,6 +263,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd56ca503cf4cff47a8710586fe1fd11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &37857540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37857534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69568f406da2f6743b7e0a2280190b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &128811684
@@ -314,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -681,7 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -804,6 +817,7 @@ GameObject:
   - component: {fileID: 1701152511}
   - component: {fileID: 1701152510}
   - component: {fileID: 1701152513}
+  - component: {fileID: 1701152514}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: MenuButton
@@ -904,7 +918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 07ea8819f206ab1419d2fbf6793853f0, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -932,6 +946,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd56ca503cf4cff47a8710586fe1fd11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1701152514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701152508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69568f406da2f6743b7e0a2280190b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1814651763

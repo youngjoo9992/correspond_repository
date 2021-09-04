@@ -26,6 +26,16 @@ TagManager:
   - Obstacle
   - ScoreText
   - ResultText
+  - Shield
+  - Double
+  - ButtonHolder
+  - Stamina1
+  - Stamina2
+  - Stamina3
+  - Block1
+  - Block2
+  - Block3
+  - Block4
   layers:
   - Default
   - TransparentFX

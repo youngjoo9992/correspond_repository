@@ -13,30 +13,53 @@ public class GameManager : MonoBehaviour
     private int gameGold;
     private int score;
     private int highScore;
+    private int scoreMultiplier = 1;
+    private int shieldNum;  
     private int[] obstacleIndex = { 0, 0, 0 };
     private int[] obsBlackList = { 4, 4, 4 };
+    public int stamina;
     public int gold;//골드
     public int characterIndex;//현재 장착 캐릭터 인덱스
     public int itemIndex;
     public int[] characterCost;//상품별 가격
-
    
     private float playerSpeed = 0.3f;//플레이어 이동속도
-    private float obstacleFormationSpeed = 3f;
-    public float obstacleDelay = 2f;
+    public float obstacleFormationSpeed;
+    public float obstacleDelay;
     public float musicVolume = 1;//음악 볼륨
     public float soundEffectVolume = 1;//효과음 볼륨
+    public float originalObsFormationSpeed;
+    public float originalObsDelay;
 
     private bool shopLoop;
     private bool allowObstacle;
     private bool allowObstacleCoroutine;
+    private bool endGame;
+    private bool endGameCor;
+    public bool shield;
+    public bool shieldBool;
+    public bool doubleBool;
+    public bool shuffleBool;
     public bool[] characterPossession;
+
+    private int[] shuffleBlackList = {4, 4, 4, 4};
 
     public GameObject player;//플레이어 게임오브젝트
     private GameObject standHolder;
+    private GameObject doubleItem;
+    private GameObject shieldItem;
+    private GameObject[] blocks = { null, null, null, null };
+    public GameObject button1;
+    public GameObject button2;
+    public GameObject button3;
+    public GameObject button4;
+    public GameObject stamina1;
+    public GameObject stamina2;
+    public GameObject stamina3;
     public GameObject standHolderPrefab;//상품 진열대
     public GameObject obstacle;
     public GameObject warning;
+    public GameObject playerDeathParticle;
 
     public Slider musicVolumeSlider;
     public Slider effectVolumeSlider;
@@ -44,12 +67,13 @@ public class GameManager : MonoBehaviour
     private Text scoreText;
     private Text resultText;
 
+
+    private Vector2 shopCoordinate;//상점 좌표
+    public Vector2[] buttonCoordinates = {new Vector2(-255, -255), new Vector2(255, -255), new Vector2(-255, -710), new Vector2(255, -710)};
     //구역별 플레이어 좌표
     public Vector2[] playerCoordinate = { new Vector2(-1.34375f, 3.6875f), new Vector2(1.34375f, 3.6875f), new Vector2(-1.34375f, 1.3125f), new Vector2(1.34375f, 1.3125f) };
-    private Vector2 shopCoordinate;//상점 좌표
 
     public Sprite[] characterSprite;//캐릭터 상품 리소스
-    public Sprite[] itemSprite;//아이템 리소스 --> 0 = 셔플, 1 = 쉴드, 2 = 더블
 
     void Start()
     {
@@ -58,6 +82,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            showBlocks();
+        }
         allScene();
         menuScene();
         shopScene();
@@ -101,6 +129,9 @@ public class GameManager : MonoBehaviour
             formWarning();
             gameEnd();
             showScore();
+            useItem();
+            showItemUsing();
+            showStamina();
         }
     }
 
@@ -276,8 +307,8 @@ public class GameManager : MonoBehaviour
             obsBlackList = new int[] { 4, 4, 4 };
             allowObstacle = false;
             obstacleFormationSpeed *= 0.97f;
-            obstacleDelay *= 0.97f;
-            score++;
+            obstacleDelay = obstacleFormationSpeed * originalObsDelay / originalObsFormationSpeed;
+            score += scoreMultiplier;
             if (score > highScore)
             {
                 highScore = score;
@@ -298,18 +329,48 @@ public class GameManager : MonoBehaviour
         }
         if (player != null && !player.GetComponent<Player>().isGameStarted)
         {
-            GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-            for (int i = 0; i < obstacles.Length; i++)
+            if (endGame)
             {
-                Destroy(obstacles[i]);
+                GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+                for (int i = 0; i < obstacles.Length; i++)
+                {
+                    Destroy(obstacles[i]);
+                }
+                obstacleFormationSpeed = originalObsFormationSpeed;
+                obstacleDelay = originalObsDelay;
+                destination = 0;
+                StopAllCoroutines();
+                shield = false;
+                shieldBool = false;
+                doubleBool = false;
+                shuffleBool = false;
+                scoreMultiplier = 1;
+                stamina = 3;
+                gameGold = score;
+                gold += gameGold;
+                endGameCor = false;
+                endGame = false;
+                SceneManager.LoadScene("GameOver");
             }
-            obstacleFormationSpeed = 3f;
-            obstacleDelay = 2f;
-            destination = 0;
-            StopAllCoroutines();
-            gameGold = score;
-            gold += gameGold;
-            SceneManager.LoadScene("GameOver");
+            else if (!endGameCor)
+            {
+                endGameCor = true;
+                SpriteRenderer playerRenderer = player.GetComponent<SpriteRenderer>();
+                playerRenderer.color = new Color(playerRenderer.color.r, playerRenderer.color.g, playerRenderer.color.b, 0f);
+                Instantiate(playerDeathParticle, player.transform.position, Quaternion.identity);
+                var obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+                for (int i = 0; i < obstacles.Length; i++)
+                {
+                    obstacles[i].GetComponent<Obstacle>().obstacleSpeed = 0f;
+                }
+                var warnings = GameObject.FindGameObjectsWithTag("Warning");
+                for (int i = 0; i < warnings.Length; i++)
+                {
+                    Destroy(warnings[i]);
+                }
+                StopAllCoroutines();
+                StartCoroutine(endGameCoroutine());
+            }
         }
     }
 
@@ -336,6 +397,121 @@ public class GameManager : MonoBehaviour
         if (resultText != null)
         {
             resultText.text = "SCORE: " + score + "\n" + "HIGH: " + highScore + "\n" + "GOLD: " + gameGold;
+        }
+    }
+
+    private void useItem()
+    {
+        if (button1 == null || button2 == null || button3 == null || button4 == null)
+        {
+            button1 = GameObject.FindWithTag("Button1");
+            button2 = GameObject.FindWithTag("Button2");
+            button3 = GameObject.FindWithTag("Button3");
+            button4 = GameObject.FindWithTag("Button4");
+        }
+        if (shuffleBool)
+        {
+            shuffleBool = false;
+            int currentNumber = Random.Range(0, 4);
+            for (int i = 0; i < 4;)
+            {
+                if (shuffleBlackList.Contains(currentNumber))
+                {
+                    currentNumber = Random.Range(0, 4);
+                }
+                else
+                {
+                    shuffleBlackList[i] = currentNumber;
+                    i++;
+                }
+            }
+            button1.GetComponent<GameButtons>().buttonDestination = buttonCoordinates[shuffleBlackList[0]];
+            button2.GetComponent<GameButtons>().buttonDestination = buttonCoordinates[shuffleBlackList[1]];
+            button3.GetComponent<GameButtons>().buttonDestination = buttonCoordinates[shuffleBlackList[2]];
+            button4.GetComponent<GameButtons>().buttonDestination = buttonCoordinates[shuffleBlackList[3]];
+            shuffleBlackList = new int[] { 4, 4, 4, 4 };
+            showBlocks();
+        }
+        if (shieldBool)
+        {
+            shieldBool = false;
+            shieldNum++;
+            shield = true;
+            StartCoroutine(shieldItemCor());
+
+        }
+        if (doubleBool)
+        {
+            scoreMultiplier++;
+            doubleBool = false;
+            StartCoroutine(doubleItemCor());
+        }
+    }
+
+    private void showItemUsing()
+    {
+        if (doubleItem == null || shieldItem == null)
+        {
+            doubleItem = GameObject.FindWithTag("Double");
+            shieldItem = GameObject.FindWithTag("Shield");
+        }
+        if (scoreMultiplier != 1)
+        {
+            doubleItem.SetActive(true);
+        }
+        else
+        {
+            doubleItem.SetActive(false);
+        }
+        if (shield)
+        {
+            shieldItem.SetActive(true);
+        }
+        else
+        {
+            shieldItem.SetActive(false);
+        }
+    }
+
+    private void showStamina()
+    {
+        if (stamina1 == null || stamina2 == null || stamina3 == null)
+        {
+            stamina1 = GameObject.FindWithTag("Stamina1");
+            stamina2 = GameObject.FindWithTag("Stamina2");
+            stamina3 = GameObject.FindWithTag("Stamina3");
+        }
+        if (stamina == 2)
+        {
+            stamina3.SetActive(false);
+        }
+        if (stamina == 1)
+        {
+            stamina2.SetActive(false);
+        }
+        if (stamina == 0)
+        {
+            stamina1.SetActive(false);
+        }
+    }
+
+    public void showBlocks()
+    {
+        if (blocks[0] == null)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                blocks[i] = GameObject.FindWithTag("Block" + (i + 1));
+            }
+        }
+        if (blocks[0] != null)
+        {
+            for (int i = 1; i < 5; i++)
+            {
+                blocks[i - 1].SetActive(true);
+                blocks[i - 1].GetComponent<Text>().color = new Color(blocks[i - 1].GetComponent<Text>().color.r, blocks[i - 1].GetComponent<Text>().color.g, blocks[i - 1].GetComponent<Text>().color.b, 1);
+                StartCoroutine(fadeBlocksOut(i - 1));
+            }
         }
     }
 
@@ -370,6 +546,8 @@ public class GameManager : MonoBehaviour
         allowObstacle = true;
         allowObstacleCoroutine = false;
         score = 0;
+        obstacleFormationSpeed = originalObsFormationSpeed;
+        obstacleDelay = originalObsDelay;
     }
 
     //ShopButton onClick() 함수 - 윤영주
@@ -404,6 +582,8 @@ public class GameManager : MonoBehaviour
         allowObstacle = true;
         allowObstacleCoroutine = false;
         score = 0;
+        obstacleFormationSpeed = originalObsFormationSpeed;
+        obstacleDelay = originalObsDelay;
     }
 
     //RightButton onClick() 함수 - 윤영주
@@ -434,6 +614,42 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(obstacleFormationSpeed);
         allowObstacle = true;
         allowObstacleCoroutine = false;
+    }
+
+    IEnumerator doubleItemCor()
+    {
+        yield return new WaitForSeconds(10);
+        scoreMultiplier--;
+    }
+
+    IEnumerator shieldItemCor()
+    {
+        yield return new WaitForSeconds(10);
+        shieldNum--;
+        if (shieldNum == 0)
+        {
+            shield = false;
+        }
+    }
+
+    IEnumerator fadeBlocksOut(int blockNum)
+    {
+        Text block = blocks[blockNum].GetComponent<Text>();
+        while (block.color.a > 0.0f)
+        {
+            block.color = block.color - new Color(0, 0, 0, Time.deltaTime * 0.5f);
+            yield return null;
+        }
+        if (block.color.a <= 0.0f)
+        {
+            block.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator endGameCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        endGame = true;
     }
 
     /*

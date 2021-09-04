@@ -15,12 +15,17 @@ public class Warning : MonoBehaviour
 
     public GameObject obstaclePref;
 
-    public Sprite[] obstacleSprites;
+    public Sprite itemWarning;
+    public Sprite[] obstacleSprites;//아이템 리소스 --> 0 = 셔플, 1 = 쉴드, 2 = 더블, 3 = 일반 장애물
 
     void Start()
     {
         gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         delay = gameManager.obstacleDelay;
+        if (warningItemIndex != obstacleSprites.Length - 1)
+        {
+            GetComponent<SpriteRenderer>().sprite = itemWarning;
+        }
     }
 
     void Update()
