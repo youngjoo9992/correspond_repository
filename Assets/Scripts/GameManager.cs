@@ -31,16 +31,19 @@ public class GameManager : MonoBehaviour
     public float originalObsFormationSpeed;
     public float originalObsDelay;
 
-    private bool shopLoop;
+    private bool shopLoop = false;
     private bool allowObstacle;
     private bool allowObstacleCoroutine;
     private bool endGame;
     private bool endGameCor;
+    private bool loadSceneBool;
     public bool shield;
     public bool shieldBool;
     public bool doubleBool;
     public bool shuffleBool;
     public bool[] characterPossession;
+
+    private string sceneName;
 
     private int[] shuffleBlackList = {4, 4, 4, 4};
 
@@ -48,7 +51,8 @@ public class GameManager : MonoBehaviour
     private GameObject standHolder;
     private GameObject doubleItem;
     private GameObject shieldItem;
-    private GameObject[] blocks = { null, null, null, null };
+    private GameObject menuAudioSource;
+    public GameObject[] blocks = { null, null, null, null };
     public GameObject button1;
     public GameObject button2;
     public GameObject button3;
@@ -60,6 +64,7 @@ public class GameManager : MonoBehaviour
     public GameObject obstacle;
     public GameObject warning;
     public GameObject playerDeathParticle;
+    public GameObject soundEffectSource;
 
     public Slider musicVolumeSlider;
     public Slider effectVolumeSlider;
@@ -75,6 +80,9 @@ public class GameManager : MonoBehaviour
 
     public Sprite[] characterSprite;//캐릭터 상품 리소스
 
+    public AudioClip buttonClick;
+    public AudioClip playerDeath;
+
     void Start()
     {
         startSettings();
@@ -84,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            showBlocks();
+            button1Click();
         }
         allScene();
         menuScene();
@@ -97,7 +105,9 @@ public class GameManager : MonoBehaviour
     //모든 씬에서 실행할 코드들 - 공용
     private void allScene()
     {
+        gameSave();
         setListenerVolume();
+        loadScene();
     }
 
     //Menu씬에서 실행할 코드들 - 공용
@@ -156,6 +166,7 @@ public class GameManager : MonoBehaviour
     //초기 설정 함수 - 공용
     private void startSettings()
     {
+        gameLoad();
         dontDestroyGameManager();
         /*Vol = PlayerPrefs.GetFloat("Vol", 1f);
         Volume.value = Vol;
@@ -186,7 +197,10 @@ public class GameManager : MonoBehaviour
         {
             player.GetComponent<SpriteRenderer>().sprite = characterSprite[characterIndex];
         }
-        player.transform.position = Vector3.Lerp(player.transform.position, playerCoordinate[destination], playerSpeed);
+        if (player.GetComponent<Player>().isGameStarted)
+        {
+            player.transform.position = Vector3.Lerp(player.transform.position, playerCoordinate[destination], playerSpeed);
+        }
     }
 
     //상점 소환 함수 - 윤영주
@@ -194,18 +208,25 @@ public class GameManager : MonoBehaviour
     {
         if (!shopLoop)
         {
-            if (characterSprite.Length % 9 == 0)
+            /*if (characterSprite.Length % 9 == 0)
             {
                 for (int i = 0; i < characterSprite.Length / 9; i++)
                 {
                     for (int a = 0; a < 9; a++)
                     {
-                        GameObject Canvas = GameObject.FindWithTag("Canvas");
-                        standHolder = Canvas.transform.GetChild(0).transform.GetChild(i).transform.GetChild(a).gameObject;
+                        standHolder = GameObject.FindWithTag("StandHolderHolder").transform.Find("StandHolder (" + i + ")").transform.Find("Stand (" + a + ")").gameObject;
                         standHolder.transform.Find("Stock").GetComponent<Image>().sprite = characterSprite[a + 9 * i];
                         standHolder.transform.Find("BuyButton").GetComponent<BuyButton>().privateStockIndex = a + 9 * i;
                         standHolder.transform.Find("BuyButton").transform.Find("CostText").GetComponent<Text>().text = "G" + characterCost[a + 9 * i];
+                        Debug.Log((a + 9 * i).ToString());
                     }
+                }
+                GameObject[] stocks = GameObject.FindGameObjectsWithTag("Stock");
+                GameObject[] buyButtons = GameObject.FindGameObjectsWithTag("BuyButton");
+                for (int i = 0; i < characterSprite.Length; i++)
+                {
+                    stocks[i].GetComponent<Image>().sprite = characterSprite[i];
+                    buyButtons[i].GetComponent<BuyButton>().privateStockIndex = i;
                 }
             }
             else
@@ -214,15 +235,25 @@ public class GameManager : MonoBehaviour
                 {
                     for (int a = 0; a < 9; a++)
                     {
-                        GameObject Canvas = GameObject.FindWithTag("Canvas");
-                        standHolder = Canvas.transform.GetChild(0).transform.GetChild(i).transform.GetChild(a).gameObject;
+                        standHolder = GameObject.FindWithTag("StandHolderHolder").transform.Find("StandHolder (" + i + ")").Find("Stand (" + a + ")").gameObject;
                         standHolder.transform.Find("Stock").GetComponent<Image>().sprite = characterSprite[a + 9 * i];
                         standHolder.transform.Find("BuyButton").GetComponent<BuyButton>().privateStockIndex = a + 9 * i;
                         standHolder.transform.Find("BuyButton").transform.Find("CostText").GetComponent<Text>().text = "G" + characterCost[a + 9 * i];
                     }
                 }
+            }*/
+            GameObject[] stocks = GameObject.FindGameObjectsWithTag("Stock");
+            GameObject[] buyButtons = GameObject.FindGameObjectsWithTag("BuyButton");
+            for (int i = 0; i < characterSprite.Length; i++)
+            {
+                stocks[i].GetComponent<Image>().sprite = characterSprite[i];
+                buyButtons[i].GetComponent<BuyButton>().privateStockIndex = i;
             }
             shopLoop = true;
+        }
+        if (GameObject.FindWithTag("BuyButton").GetComponent<BuyButton>().privateStockIndex == -1)
+        {
+            shopLoop = false;
         }
     }
 
@@ -264,7 +295,40 @@ public class GameManager : MonoBehaviour
     //게임리스너 볼륨 설정 함수
     private void setListenerVolume()
     {
-        GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>().volume = musicVolume;
+        GameObject[] audio = GameObject.FindGameObjectsWithTag("SoundEffectSource");
+        for (int i = 0; i < audio.Length; i++)
+        {
+            if (!audio[i].GetComponent<AudioSource>().isPlaying)
+            {
+                Destroy(audio[i]);
+            }
+        }
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            if (player != null && player.GetComponent<Player>().isGameStarted)
+            {
+                GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>().volume = musicVolume;
+            }
+            else
+            {
+                GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>().volume = 0f;
+            }
+        }
+        else if (menuAudioSource != null)
+        {
+            GameObject.FindWithTag("MusicSource").GetComponent<AudioSource>().volume = musicVolume;
+        }
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            if (menuAudioSource == null)
+            {
+                menuAudioSource = GameObject.FindWithTag("MusicSource");
+                if (menuAudioSource != null)
+                {
+                    DontDestroyOnLoad(menuAudioSource);
+                }
+            }
+        }
     }
 
     //경고 표시 함수 - 윤영주
@@ -354,10 +418,11 @@ public class GameManager : MonoBehaviour
             }
             else if (!endGameCor)
             {
+                //playSoundEffect(playerDeath);
                 endGameCor = true;
                 SpriteRenderer playerRenderer = player.GetComponent<SpriteRenderer>();
                 playerRenderer.color = new Color(playerRenderer.color.r, playerRenderer.color.g, playerRenderer.color.b, 0f);
-                Instantiate(playerDeathParticle, player.transform.position, Quaternion.identity);
+                //Instantiate(playerDeathParticle, player.transform.position, Quaternion.identity);
                 var obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
                 for (int i = 0; i < obstacles.Length; i++)
                 {
@@ -368,6 +433,7 @@ public class GameManager : MonoBehaviour
                 {
                     Destroy(warnings[i]);
                 }
+                
                 StopAllCoroutines();
                 StartCoroutine(endGameCoroutine());
             }
@@ -495,6 +561,102 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void loadScene()
+    {
+        if (loadSceneBool)
+        {
+            SceneManager.LoadScene(sceneName);
+            loadSceneBool = false;
+        }
+    }
+
+    private void gameSave()
+    {
+        if (!PlayerPrefs.HasKey("gold"))
+        {
+            PlayerPrefs.SetInt("gold", gold);
+            PlayerPrefs.SetInt("characterIndex", characterIndex);
+            PlayerPrefs.SetInt("highScore", highScore);
+            PlayerPrefs.SetFloat("musicVolume", musicVolume);
+            PlayerPrefs.SetFloat("soundEffectVolume", soundEffectVolume);
+            for (int i = 0; i < characterPossession.Length; i++)
+            {
+                if (characterPossession[i])
+                {
+                    PlayerPrefs.SetInt("possesion" + i, 1);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("possesion" + i, 0);
+                }
+            }
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            saveIntValue("gold", PlayerPrefs.GetInt("gold"), gold);
+            saveIntValue("characterIndex", PlayerPrefs.GetInt("characterIndex"), characterIndex);
+            saveIntValue("highScore", PlayerPrefs.GetInt("highScore"), highScore);
+            saveFloatValue("musicVolume", PlayerPrefs.GetInt("musicVolume"), musicVolume);
+            saveFloatValue("soundEffectVolume", PlayerPrefs.GetInt("soundEffectVolume"), soundEffectVolume);
+            for (int i = 0; i < characterPossession.Length; i++)
+            {
+                if (characterPossession[i] && PlayerPrefs.GetInt("possesion" + i) == 0)
+                {
+                    PlayerPrefs.SetInt("possesion" + i, 1);
+                }
+            }
+        }
+    }
+
+    private void gameLoad()
+    {
+        if (!PlayerPrefs.HasKey("gold"))
+        {
+            return;
+        }
+        gold = PlayerPrefs.GetInt("gold");
+        characterIndex = PlayerPrefs.GetInt("characterIndex");
+        highScore = PlayerPrefs.GetInt("highScore");
+        musicVolume = PlayerPrefs.GetFloat("musicVolume");
+        soundEffectVolume = PlayerPrefs.GetFloat("soundEffectVolume");
+        for (int i = 0; i < characterPossession.Length; i++)
+        {
+            if (PlayerPrefs.GetInt("possesion" + i) == 1)
+            {
+                characterPossession[i] = true;
+            }
+            else
+            {
+                characterPossession[i] = false;
+            }
+        }
+    }
+
+    private void saveIntValue(string _name, int _value, int _compare)
+    {
+        if (_value != _compare)
+        {
+            PlayerPrefs.SetInt(_name, _compare);
+        }
+    }
+
+    private void saveFloatValue(string _name, float _value, float _compare)
+    {
+        if (_value != _compare)
+        {
+            PlayerPrefs.SetFloat(_name, _compare);
+        }
+    }
+
+    public void playSoundEffect(AudioClip _resource)
+    {
+        AudioSource audioSource = Instantiate(soundEffectSource, Vector2.zero, Quaternion.identity).GetComponent<AudioSource>();
+        audioSource.volume = soundEffectVolume;
+        audioSource.clip = _resource;
+        audioSource.Play();
+    }
+
     public void showBlocks()
     {
         if (blocks[0] == null)
@@ -519,76 +681,93 @@ public class GameManager : MonoBehaviour
     public void button1Click()
     {
         destination = 0;
+        playSoundEffect(buttonClick);
     }
 
     //2번 버튼 onClick() 함수 - 윤영주
     public void button2Click()
     {
         destination = 1;
+        playSoundEffect(buttonClick);
     }
 
     //3번 버튼 onClick() 함수 - 윤영주
     public void button3Click()
     {
         destination = 2;
+        playSoundEffect(buttonClick);
     }
 
     //4번 버튼 onClick() 함수 - 윤영주
     public void button4Click()
     {
         destination = 3;
+        playSoundEffect(buttonClick);
     }
 
     //StartButton onClick() 함수 - 윤영주
     public void startButtonClick()
     {
-        SceneManager.LoadScene("Game");
+        playSoundEffect(buttonClick);
+        sceneName = "Game";
         allowObstacle = true;
         allowObstacleCoroutine = false;
         score = 0;
         obstacleFormationSpeed = originalObsFormationSpeed;
         obstacleDelay = originalObsDelay;
+        Destroy(menuAudioSource);
+        StartCoroutine(sceneFadeCor());
     }
 
     //ShopButton onClick() 함수 - 윤영주
     public void shopButtonClick()
     {
+        playSoundEffect(buttonClick);
         shopLoop = false;
-        SceneManager.LoadScene("Shop");
+        sceneName = "Shop";
+        StartCoroutine(sceneFadeCor());
     }
 
     //MenuButton onClick() 함수 - 윤영주
     public void menuButtonClick()
     {
-        SceneManager.LoadScene("Menu");
+        playSoundEffect(buttonClick);
+        sceneName = "Menu";
+        StartCoroutine(sceneFadeCor());
     }
 
     //QuitButton onClick() 함수(게임 종료) - 윤영주
     public void quitButtonClick()
     {
+        playSoundEffect(buttonClick);
         Application.Quit();
     }
 
     //SettingButton onClick() 함수 - 윤영주
     public void settingButtonClick()
     {
-        SceneManager.LoadScene("Setting");
+        playSoundEffect(buttonClick);
+        sceneName = "Setting";
+        StartCoroutine(sceneFadeCor());
     }
 
     //RestartButton onClick() 함수 - 윤영주
     public void restartButtonClick()
     {
-        SceneManager.LoadScene("Game");
+        playSoundEffect(buttonClick);
+        sceneName = "Game";
         allowObstacle = true;
         allowObstacleCoroutine = false;
         score = 0;
         obstacleFormationSpeed = originalObsFormationSpeed;
         obstacleDelay = originalObsDelay;
+        StartCoroutine(sceneFadeCor());
     }
 
     //RightButton onClick() 함수 - 윤영주
     public void rightButtonClick()
     {
+        playSoundEffect(buttonClick);
         if (characterSprite.Length % 9 == 0)
         {
             shopPage = Mathf.Clamp(shopPage + 1, 1, characterSprite.Length / 9);
@@ -602,6 +781,7 @@ public class GameManager : MonoBehaviour
     //LeftButton onClick()함수 - 윤영주
     public void leftButtonClick()
     {
+        playSoundEffect(buttonClick);
         if (shopPage != 1)
         {
             shopPage -= 1;
@@ -637,8 +817,16 @@ public class GameManager : MonoBehaviour
         Text block = blocks[blockNum].GetComponent<Text>();
         while (block.color.a > 0.0f)
         {
-            block.color = block.color - new Color(0, 0, 0, Time.deltaTime * 0.5f);
-            yield return null;
+            if (block != null)
+            {
+                block.color = block.color - new Color(0, 0, 0, Time.deltaTime * 0.5f);
+                yield return null;
+            }
+            else
+            {
+                showBlocks();
+                break;
+            }
         }
         if (block.color.a <= 0.0f)
         {
@@ -650,6 +838,18 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         endGame = true;
+    }
+
+    IEnumerator sceneFadeCor()
+    {
+        Image fader = GameObject.Find("Canvas").transform.Find("SceneLoadingImage").GetComponent<Image>();
+        fader.gameObject.SetActive(true);
+        while (fader.color.a < 1f)
+        {
+            fader.color = fader.color + new Color(0, 0, 0, Time.deltaTime * 1.2f);
+            yield return null;
+        }
+        loadSceneBool = true;
     }
 
     /*

@@ -36,6 +36,11 @@ TagManager:
   - Block2
   - Block3
   - Block4
+  - SceneLoadingImage
+  - StandHolderHolder
+  - Stock
+  - BuyButton
+  - SoundEffectSource
   layers:
   - Default
   - TransparentFX

@@ -65,9 +65,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -219,9 +219,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 218184786832924264}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -523,9 +523,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 8418455091579016872}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 4995355072292900958}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 2634021763019786591}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -880,7 +880,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1906947382683625436}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7606017644516217685}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7606017644516217685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -893,7 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &2634021763019786591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,7 +972,7 @@ GameObject:
   - component: {fileID: 2841679921767882721}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1065,7 +1076,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7229245690500383459}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 921432616395495157}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &921432616395495157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,7 +1100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &2841679921767882721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1107,7 +1129,7 @@ GameObject:
   - component: {fileID: 8172556402701171175}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1211,7 +1233,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6009638505200164456}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3663304279304759225}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3663304279304759225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1224,7 +1257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &8172556402701171175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1250,7 +1283,7 @@ GameObject:
   - component: {fileID: 5176852044589260448}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1376,9 +1409,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -1405,7 +1438,7 @@ GameObject:
   - component: {fileID: 2799303649833086045}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1509,7 +1542,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5176852045669437896}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2806318901721543668}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2806318901721543668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1522,7 +1566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &2799303649833086045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1676,9 +1720,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -1705,7 +1749,7 @@ GameObject:
   - component: {fileID: 7420698238189193026}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1809,7 +1853,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8109829565030444730}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7289845305611597263}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7289845305611597263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,7 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &7420698238189193026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1848,7 +1903,7 @@ GameObject:
   - component: {fileID: 64612714199263714}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1922,7 +1977,7 @@ GameObject:
   - component: {fileID: 7177946319509733693}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2048,9 +2103,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -2077,7 +2132,7 @@ GameObject:
   - component: {fileID: 7876981832840938379}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2181,7 +2236,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7177946320591490645}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4155369623644817657}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4155369623644817657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2194,7 +2260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &7876981832840938379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2219,7 +2285,7 @@ GameObject:
   - component: {fileID: 7177946320713887076}
   - component: {fileID: 7177946320713887077}
   m_Layer: 5
-  m_Name: Stand
+  m_Name: Stand (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2451,7 +2517,7 @@ GameObject:
   - component: {fileID: 84110063864141412}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2555,7 +2621,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7900911940423855267}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2116908635541849464}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2116908635541849464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2568,7 +2645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &84110063864141412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2722,9 +2799,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -2748,7 +2825,7 @@ GameObject:
   - component: {fileID: 7900911941487813579}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2822,7 +2899,7 @@ GameObject:
   - component: {fileID: 4436167752637687109}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2899,7 +2976,7 @@ GameObject:
   - component: {fileID: 5021874483265678744}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3003,7 +3080,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 770925106208953107}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5796282026344930716}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5796282026344930716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3016,7 +3104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &5021874483265678744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3094,9 +3182,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -3120,7 +3208,7 @@ GameObject:
   - component: {fileID: 2620751501384440016}
   m_Layer: 5
   m_Name: Stock
-  m_TagString: Untagged
+  m_TagString: Stock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3246,9 +3334,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 825b19ddf4c20724fa1234aa85283065, type: 3}
     m_FontSize: 70
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
@@ -3275,7 +3363,7 @@ GameObject:
   - component: {fileID: 5984128377130570266}
   m_Layer: 5
   m_Name: BuyButton
-  m_TagString: Untagged
+  m_TagString: BuyButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3379,7 +3467,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7447680537818728772}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3129655606488556977}
+        m_MethodName: buyButtonOnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3129655606488556977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3392,7 +3491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd2305b68d94cd46b61d4256a363258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  privateStockIndex: 0
+  privateStockIndex: -1
 --- !u!114 &5984128377130570266
 MonoBehaviour:
   m_ObjectHideFlags: 0

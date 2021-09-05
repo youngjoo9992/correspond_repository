@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
             else
             {
                 gameManager.stamina--;
+                Instantiate(gameManager.playerDeathParticle, transform.position, Quaternion.identity);
+                gameManager.playSoundEffect(gameManager.playerDeath);
                 if (gameManager.stamina == 0)
                 {
                     isGameStarted = false;
