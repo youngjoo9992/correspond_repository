@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
     {
         if (!shopLoop)
         {
-            /*if (characterSprite.Length % 9 == 0)
+            if (characterSprite.Length % 9 == 0)
             {
                 for (int i = 0; i < characterSprite.Length / 9; i++)
                 {
@@ -218,16 +218,15 @@ public class GameManager : MonoBehaviour
                         standHolder.transform.Find("Stock").GetComponent<Image>().sprite = characterSprite[a + 9 * i];
                         standHolder.transform.Find("BuyButton").GetComponent<BuyButton>().privateStockIndex = a + 9 * i;
                         standHolder.transform.Find("BuyButton").transform.Find("CostText").GetComponent<Text>().text = "G" + characterCost[a + 9 * i];
-                        Debug.Log((a + 9 * i).ToString());
                     }
                 }
-                GameObject[] stocks = GameObject.FindGameObjectsWithTag("Stock");
+                /*GameObject[] stocks = GameObject.FindGameObjectsWithTag("Stock");
                 GameObject[] buyButtons = GameObject.FindGameObjectsWithTag("BuyButton");
                 for (int i = 0; i < characterSprite.Length; i++)
                 {
                     stocks[i].GetComponent<Image>().sprite = characterSprite[i];
                     buyButtons[i].GetComponent<BuyButton>().privateStockIndex = i;
-                }
+                }*/
             }
             else
             {
@@ -241,14 +240,14 @@ public class GameManager : MonoBehaviour
                         standHolder.transform.Find("BuyButton").transform.Find("CostText").GetComponent<Text>().text = "G" + characterCost[a + 9 * i];
                     }
                 }
-            }*/
-            GameObject[] stocks = GameObject.FindGameObjectsWithTag("Stock");
+            }
+            /*GameObject[] stocks = GameObject.FindGameObjectsWithTag("Stock");
             GameObject[] buyButtons = GameObject.FindGameObjectsWithTag("BuyButton");
             for (int i = 0; i < characterSprite.Length; i++)
             {
                 stocks[i].GetComponent<Image>().sprite = characterSprite[i];
                 buyButtons[i].GetComponent<BuyButton>().privateStockIndex = i;
-            }
+            }*/
             shopLoop = true;
         }
         if (GameObject.FindWithTag("BuyButton").GetComponent<BuyButton>().privateStockIndex == -1)
