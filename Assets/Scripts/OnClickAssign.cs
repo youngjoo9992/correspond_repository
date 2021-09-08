@@ -7,53 +7,62 @@ public class OnClickAssign : MonoBehaviour
 {
     void Start()
     {
-        if (gameObject.transform.tag == "StartButton")
+        GameManager gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        if (gameObject.CompareTag("StartButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().startButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.startButtonClick);
         }
-        else if (gameObject.transform.tag == "ShopButton")
+        else if (gameObject.CompareTag("ShopButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().shopButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.shopButtonClick);
         }
-        else if (gameObject.transform.tag == "QuitButton")
+        else if (gameObject.CompareTag("QuitButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().quitButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.quitButtonClick);
         }
-        else if (gameObject.transform.tag == "SettingButton")
+        else if (gameObject.CompareTag("SettingButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().settingButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.settingButtonClick);
         }
-        else if (gameObject.transform.tag == "RestartButton")
+        else if (gameObject.CompareTag("RestartButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().restartButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.restartButtonClick);
         }
-        else if (gameObject.transform.tag == "MenuButton")
+        else if (gameObject.CompareTag("MenuButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().menuButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.menuButtonClick);
         }
-        else if (gameObject.transform.tag == "Button1")
+        else if (gameObject.CompareTag("Button1"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().button1Click);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.button1Click);
         }
-        else if (gameObject.transform.tag == "Button2")
+        else if (gameObject.CompareTag("Button2"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().button2Click);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.button2Click);
         }
-        else if (gameObject.transform.tag == "Button3")
+        else if (gameObject.CompareTag("Button3"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().button3Click);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.button3Click);
         }
-        else if (gameObject.transform.tag == "Button4")
+        else if (gameObject.CompareTag("Button4"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().button4Click);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.button4Click);
         }
-        else if (gameObject.transform.tag == "LeftButton")
+        else if (gameObject.CompareTag("LeftButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().leftButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.leftButtonClick);
         }
-        else if (gameObject.transform.tag == "RightButton")
+        else if (gameObject.CompareTag("RightButton"))
         {
-            gameObject.GetComponent<Button>().onClick.AddListener((UnityEngine.Events.UnityAction)GameObject.FindWithTag("GameController").GetComponent<GameManager>().rightButtonClick);
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.rightButtonClick);
+        }
+        else if (gameObject.CompareTag("HelpButton"))
+        {
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.helpButtonClick);
+        }
+        else if (gameObject.CompareTag("DevelopersButton"))
+        {
+            gameObject.GetComponent<Button>().onClick.AddListener(gameManager.developersButtonClick);
         }
     }
 }

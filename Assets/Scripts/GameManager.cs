@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     private bool endGame;
     private bool endGameCor;
     private bool loadSceneBool;
+    private bool showHelp;
+    private bool showDevelopers;
     public bool shield;
     public bool shieldBool;
     public bool doubleBool;
@@ -116,6 +118,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             showGold();
+            developers();
         }
     }
 
@@ -160,6 +163,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Setting")
         {
             setVolume();
+            help();
         }
     }
 
@@ -648,6 +652,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void help()
+    {
+        GameObject helpPanel = GameObject.Find("Canvas").transform.Find("HelpPanel").gameObject;
+        if (showHelp)
+        {
+            helpPanel.SetActive(true);
+            if (Input.GetMouseButtonDown(0))
+            {
+                playSoundEffect(buttonClick);
+                showHelp = false;
+            }
+        }
+        else
+        {
+            helpPanel.SetActive(false);
+        }
+    }
+
+    private void developers()
+    {
+        GameObject developersPanel = GameObject.Find("Canvas").transform.Find("DevelopersPanel").gameObject;
+        if (showDevelopers)
+        {
+            developersPanel.SetActive(true);
+            if (Input.GetMouseButtonDown(0))
+            {
+                playSoundEffect(buttonClick);
+                showDevelopers = false;
+            }
+        }
+        else
+        {
+            developersPanel.SetActive(false);
+        }
+    }
+
     public void playSoundEffect(AudioClip _resource)
     {
         AudioSource audioSource = Instantiate(soundEffectSource, Vector2.zero, Quaternion.identity).GetComponent<AudioSource>();
@@ -787,6 +827,18 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void helpButtonClick()
+    {
+        playSoundEffect(buttonClick);
+        showHelp = true;
+    }
+
+    public void developersButtonClick()
+    {
+        playSoundEffect(buttonClick);
+        showDevelopers = true;
+    }
+
     IEnumerator setAllowObstacle()
     {
         allowObstacleCoroutine = true;

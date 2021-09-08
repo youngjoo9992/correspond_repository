@@ -41,6 +41,8 @@ TagManager:
   - Stock
   - BuyButton
   - SoundEffectSource
+  - HelpButton
+  - DevelopersButton
   layers:
   - Default
   - TransparentFX
