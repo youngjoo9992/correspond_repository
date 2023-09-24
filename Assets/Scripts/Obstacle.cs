@@ -14,6 +14,7 @@ public class Obstacle : MonoBehaviour
 
     void Start()
     {
+        //obstacleSpeed = Screen.width * obstacleSpeed * 0.0005f;
         start = transform.position.x;
         if (transform.position.x > 0)
         {
